@@ -4,7 +4,7 @@ import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 @ApiModel
-public class Point{
+public class Point  implements Comparable<Point>{
 	int x;
 	int y;
 	Point(){
@@ -31,5 +31,13 @@ public class Point{
 	@Override
 	public String toString(){
 		return "{"+ this.x +" , "+this.y+"}";
+	}
+	@Override
+	public int compareTo(Point o) {
+		if(x>o.x || x==o.x&& y> o.y)
+			return 1;
+		if(x==o.x&&y==o.y)
+			return 0;
+		return -1;
 	}
 }

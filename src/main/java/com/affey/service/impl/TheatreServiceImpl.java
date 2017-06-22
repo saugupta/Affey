@@ -1,6 +1,10 @@
 package com.affey.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -9,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.affey.model.Seat;
 import com.affey.model.Point;
+import com.affey.model.Seat;
 import com.affey.model.Theatre;
 import com.affey.service.TheatreService;
 import com.affey.util.AffeyException;
@@ -33,18 +37,34 @@ public class TheatreServiceImpl implements  TheatreService{
 		theatres.put(1, tOne);
 	}
 	
-	public boolean bookTheSeat(int theatreId, Point location, int customerId) {
-		
+	public boolean bookTheSeats(int theatreId, Point[] locations, int customerId) {
+		Arrays.sort(locations);
 		Theatre theatre= theatres.get(theatreId);
-		Seat seat= theatre.getSeat(location);
-		if(seat.isReserved())
+		boolean bookingPossible=true;
+		List<Seat> bookedSeats= new ArrayList<Seat>();
+		for(int i=0;i<locations.length;i++){
+			Seat seat= theatre.getSeat(locations[i]);
+			if(seat.isReserved()){
+				bookingPossible=false;
+				break;
+			}
+			synchronized(seat){
+				if(seat.isReserved()){
+					bookingPossible=false;
+					break;
+				}
+				seat.setReserved(true);
+				seat.setCustomer(customerId);
+				bookedSeats.add(seat);
+				LOGGER.info(seat+" booked.");
+			}
+		}
+		if(!bookingPossible){
+			for(Seat seat: bookedSeats){
+				seat.setReserved(false);
+				LOGGER.info(seat+" unbooked due to non atomic complete transaction.");
+			}
 			return false;
-		synchronized(seat){
-			if(seat.isReserved())
-				return false;
-			seat.setReserved(true);
-			seat.setCustomer(customerId);
-			LOGGER.info(seat+" booked.");
 		}
 		return true;
 	}

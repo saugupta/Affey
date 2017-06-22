@@ -20,12 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-
 import com.affey.model.Point;
 import com.affey.service.TheatreService;
 import com.affey.util.AffeyException;
 import com.affey.util.Util;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -43,7 +47,7 @@ public class RestService {
 	  @ApiOperation(value = "Book a seat", position = 1)
 	  public ResponseEntity<?>  bookTicket(@ApiParam(value = "Theatre Id", required = true) @PathVariable int theatreId,
 			  @ApiParam(value = "Customer Id", required = true) @PathVariable int customerId,
-	      @ApiParam(value = "Run Parameters", required = true) @RequestBody Point point,
+	      @ApiParam(value = "Run Parameters", required = true) @RequestBody Point[] points,
 	      HttpServletRequest request, HttpServletResponse response) {
 		  
 	    if (!theatreService.doTheatreExist(theatreId)){
@@ -51,15 +55,18 @@ public class RestService {
 	    	error.addProperty("error", "Theatre "+ theatreId+" not found.");
 	    	return  new ResponseEntity<>(error.toString(),HttpStatus.NOT_FOUND);
 	    }
-	    if(!theatreService.isSeatValid(theatreId, point)){
+	    	
+	    for( int i=0;i<points.length;i++){
+	    if(!theatreService.isSeatValid(theatreId, points[i])){
 	    	JsonObject error= new JsonObject();
-	    	error.addProperty("error", "Seat "+point +" does not exist in theatre "+ theatreId);
+	    	error.addProperty("error", "Seat "+points[i] +" does not exist in theatre "+ theatreId);
 	    	return  new ResponseEntity<>(error.toString(),HttpStatus.NOT_FOUND );
 	    }
-	      return new ResponseEntity<>(theatreService.bookTheSeat(theatreId, point, customerId),HttpStatus.OK);
+	    }
+	      return new ResponseEntity<>(theatreService.bookTheSeats(theatreId, points, customerId),HttpStatus.OK);
 	 }
 	 
-	// @ResponseStatus(HttpStatus.OK)
+
 	  @RequestMapping(value = "/v1/api/theatre/{theatreId}", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	  @ApiOperation(value = "Book a seat", position = 1)
 	  public  ResponseEntity<?>  ifTheatreExist(@ApiParam(value = "Theatre Id", required = true) @PathVariable int theatreId,
