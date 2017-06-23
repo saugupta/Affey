@@ -44,7 +44,7 @@ public class TheatreServiceImpl implements  TheatreService{
 		List<Seat> bookedSeats= new ArrayList<Seat>();
 		for(int i=0;i<locations.length;i++){
 			Seat seat= theatre.getSeat(locations[i]);
-			if(seat.isReserved()){
+			if(seat.isReserved()){ 
 				bookingPossible=false;
 				break;
 			}
