@@ -1,11 +1,12 @@
 package com.affey.service;
 
 import com.affey.model.Point;
+import com.affey.model.Theatre;
+import com.affey.rest.pojo.TheatrePojo;
 
 public interface TheatreService {
-
-	public boolean bookTheSeats(int theatreId, Point[] locations, int customerId) ;
-	public boolean doTheatreExist(int id);
-	public boolean isSeatValid(int id,Point point );
 	
+	public Theatre createTheatre(Theatre theatre);
+	public Theatre getTheatre(Long theatreId);
+	public Theatre updateTheatre(Long theatreId, Theatre theatre);
 }

@@ -1,7 +1,6 @@
 package com.affey.model.impl;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +12,6 @@ import javax.persistence.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.affey.model.Point;
 import com.affey.model.Seat;
 import com.affey.model.Show;
 
@@ -23,58 +21,62 @@ import com.affey.model.Show;
 public class SeatDTO implements Seat {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SeatDTO.class);
 
-
 	@Id
 	@Column(name = "seat_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long seatId;
-	 
-	@Embedded
-	PointDTO point;
 	
-	@Column(name = "reserved", nullable=false)
-	boolean reserved;
+	@Column(name = "reserved")
+	private boolean reserved=false;
 	
 	@ManyToOne
 	@JoinColumn(name = "show_id", nullable = false)
-	ShowDTO show;
+	private ShowDTO show;
 	
-	@Column(name = "customer_id")
-	int customerId;
-	
-	SeatDTO() {
-
-	}
-
-	public SeatDTO(int x, int y) {
-		point = new PointDTO(x, y);
-		reserved = false;
-		customerId = -1;
-	}
+	@ManyToOne
+	@JoinColumn(name = "user_name")
+	private UserDTO user;
 	
 	@Override
-	public Point getPoint() {
-		return point;
+	public UserDTO getUser() {
+		return user;
 	}
 
-	public void setPoint(PointDTO point) {
-		this.point = point;
+	public void setUser(UserDTO user) {
+		this.user = user;
 	}
 
+	public void setSeatId(Long seatId) {
+		this.seatId = seatId;
+	}
+
+	SeatDTO() {
+		
+	}
+
+//	public SeatDTO(int x, int y) {
+//		point = new PointDTO(x, y);
+//		reserved = false;
+//		customerId = (long) -1;
+//	}
+	
+
+	@Override
+	public Long getSeatId() {
+		return seatId;
+	}
+	
 	public boolean isReserved() {
 		return reserved;
 	}
 
+	@Override
+	public boolean getReserved() {
+		return reserved;
+	}
+	
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;
-	}
-
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customer) {
-		this.customerId = customer;
 	}
 
 
@@ -82,13 +84,15 @@ public class SeatDTO implements Seat {
 	public Show getShow() {
 		return show;
 	}
-	public void setShowId(ShowDTO showId){
-		this.show=showId;
+	public void setShow(ShowDTO show){
+		this.show=show;
 	}
 	
 	@Override
 	public String toString() {
-		return "Seat: Point" + point + " Reserved:" + reserved + " Customer: "
-				+ customerId;
+		return "Seat: "+seatId+" Reserved:" + reserved + " User: "
+				+ user.toString()+ "Show:"+ show.toString();
 	}
+
+
 }

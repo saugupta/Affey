@@ -19,6 +19,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -81,10 +83,43 @@ public class AffeyServer {
 	    return dataSource;
 	  }
 
-//	  @Bean
-//	  @Autowired
-//	  public PlatformTransactionManager transactionManager(
-//	      SessionFactory sessionFactory) {
-//	    return new HibernateTransactionManager(sessionFactory);
-//	  }
+	  @Bean
+	  public PasswordEncoder encoder() {
+	    return new BCryptPasswordEncoder();
+	  }
+	  /*
+	   * This bean is used to create a session, No need to create a session anymore for transactions
+	   * Use sessionFactory.getCurrentSession(); instead of sessionFactory.openSession();
+	   * i.e now if we use @Transactional for any function, it automatically opens a session and close at the end. 
+	   *So, for using @Transactional, we need to use this HibernateTransactionalManager which replaces our code
+	   *public void doSomething() {
+	    Session sess = factory.openSession();
+	    Transaction tx = null;
+	    try {
+	        tx = sess.beginTransaction();
+	
+	        // do some work
+	        ...
+	
+	        tx.commit();
+	    }
+	    catch (RuntimeException e) {
+	        if (tx != null) tx.rollback();
+	        throw e; // or display error message
+	    }
+	    finally {
+	        sess.close();
+	    }
+	}
+	with simple: @Transactional
+	public void doSomething() {
+	    // do some work
+	}
+	   */
+	  @Bean
+	  @Autowired
+	  public PlatformTransactionManager transactionManager(
+	      SessionFactory sessionFactory) {
+	    return new HibernateTransactionManager(sessionFactory);
+	  }
 }

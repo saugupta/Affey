@@ -1,33 +1,43 @@
 package com.affey.rest.pojo;
 
+import java.io.Serializable;
+
 import com.affey.model.Point;
 import com.affey.model.Seat;
 import com.affey.model.Show;
+import com.affey.model.User;
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
-public class SeatPojo implements Seat{
+@ApiModel
+public class SeatPojo implements Seat, Serializable{
 
-	private Point point;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3817784975947931167L;
+	
+
+	@ApiModelProperty(required = true)
 	private boolean reserved;
-	private int customerId;
-	private Show show;
+	@ApiModelProperty(required = true)
+	private Long customerId;
+	
 	SeatPojo() {
 
 	}
 
 	public SeatPojo(int x, int y) {
-		point = new PointPojo(x, y);
+	
 		reserved = false;
-		customerId = -1;
+		customerId = (long)-1;
 	}
 
 	@Override
-	public Point getPoint() {
-		return point;
+	public Long getSeatId() {
+		return null;
 	}
-
-	public void setPoint(Point point) {
-		this.point = point;
-	}
+	
 	@Override
 	public boolean isReserved() {
 		return reserved;
@@ -36,28 +46,30 @@ public class SeatPojo implements Seat{
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;
 	}
-	@Override
-	public int getCustomerId() {
-		return customerId;
-	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 
 	@Override
 	public Show getShow() {
-		return show;
+		return null;
 	}
-	public void setShow(Show show){
-		this.show=show;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "Seat: Point" + point + " Reserved:" + reserved + " Customer: "
+		return "Seat:    Reserved:" + reserved + " Customer: "
 				+ customerId;
 	}
 
-	
+	@Override
+	public boolean getReserved() {
+		return reserved;
+	}
+
+	@Override
+	public User getUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

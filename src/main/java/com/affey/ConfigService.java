@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Config {
+public class ConfigService {
 
-	@Value("${aether.db.driver}")
-	  private String aetherDbDriver;
 
 	
 }
