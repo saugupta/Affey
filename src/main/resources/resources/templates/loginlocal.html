@@ -1,0 +1,41 @@
+<div class="container" align="left" >
+  <div class="form-horizontal toppadding">
+    <div class="form-group">
+      <h2 class="control-label col-sm-4">Please sign in</h2>
+    </div>
+  </div>
+</div>
+
+<div class="form-horizontal toppadding" >
+  <div class="form-group">
+    <div class="col-sm-4">
+      <input type="text" class="form-control" placeholder="customer | admin" 
+        ng-model="username" />
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-4">
+      <input type="password" class="form-control" placeholder="password" 
+        ng-model="password" />
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-4">
+      <input type="checkbox" ng-model="remember" />
+      <label class="control-label">Remember Me</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-1 col-sm-offset-2">
+      <a class="btn btn-info pull-right" role="button" ng-click="loginAsTenant()">As Customer</a>
+    </div>
+    <div class="col-sm-1">
+      <a class="btn btn-info pull-right" role="button" ng-click="loginAsAdmin()">As Admin</a>
+    </div>
+  </div>
+</div>
+<div class="form-horizontal toppadding">
+ <div ng-show="alert.message !== ''" class="form-group">
+   <alert type="{{alert.type}}" close="closeAlert()">{{alert.message}}</alert>
+ </div>            
+</div>

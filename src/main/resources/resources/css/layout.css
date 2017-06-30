@@ -1,0 +1,225 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.topborder {
+	border-top: 1px solid #ccc;
+}
+
+.toppadding {
+	padding-top: 50px;
+}
+
+/*
+ * Global add-ons
+ */
+.sub-header {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+	border: 0;
+}
+
+/*
+ * Main content
+ */
+.main {
+	padding: 20px;
+}
+
+@media ( min-width : 768px) {
+	.main {
+		padding-right: 40px;
+		padding-left: 40px;
+	}
+}
+
+.main .page-header {
+	margin-top: 0;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+.placeholders {
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.placeholders h4 {
+	margin-bottom: 0;
+}
+
+.placeholder {
+	margin-bottom: 20px;
+}
+
+.placeholder img {
+	display: inline-block;
+	border-radius: 50%;
+}
+
+table {
+	max-width: 100%;
+	background-color: transparent;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.table {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.table th,.table td {
+	padding: 8px;
+	line-height: 20px;
+	text-align: left;
+	vertical-align: top;
+	border-top: 1px solid #dddddd;
+}
+
+.table th {
+	font-weight: bold;
+}
+
+.table thead th {
+	vertical-align: bottom;
+}
+
+.table caption+thead tr:first-child th,.table caption+thead tr:first-child td,.table colgroup+thead tr:first-child th,.table colgroup+thead tr:first-child td,.table thead:first-child tr:first-child th,.table thead:first-child tr:first-child td
+	{
+	border-top: 0;
+}
+
+.table tbody+tbody {
+	border-top: 2px solid #dddddd;
+}
+
+.table .table {
+	background-color: #ffffff;
+}
+
+.table-hover tbody tr:hover>td,.table-hover tbody tr:hover>th {
+	background-color: #f5f5f5;
+}
+
+div[data-listview] table th {
+	text-align: left;
+}
+
+.remove{
+    background: #A38787;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 21px;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 9px;
+    line-height: 60%;   
+}
+
+.add{
+    background: #87A387;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 21px;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 9px;
+    line-height: 60%;   
+}
+
+.logtextarea {
+	height: 600px;
+	max-width: 800px;
+	color: #fff;
+	font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+	width: 100%;
+	background: black;
+	border-radius: 3px;
+	line-height: 2em;
+	border: none;
+	box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	-webkit-transition: height 2s ease;
+	-moz-transition: height 2s ease;
+	-ms-transition: height 2s ease;
+	-o-transition: height 2s ease;
+	transition: height 2s ease;
+}
+
+.disabledTenantStyle{
+background-color:#eee;
+}
+
+.adminTenantStyle{
+background-color:#ccc;
+}
+
+.enabledTenantStyle{
+background-color:#fff;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+
+.anchor-style{
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.anchor-style:hover{
+    color: #286090;
+}
+   
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+.diluted {
+	color:#cccccc;
+}
+
+.danger-glyph {
+    color: red;
+}
+
+.action-glyph {
+    color: grey;
+}
+
+
+.active-glyph {
+    color: green;
+}
