@@ -21,6 +21,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -56,8 +57,9 @@ public class AffeyServer {
 	            new ApiInfo("Affey APIs", "APIs to book tickets in theatres", "v1", "",
 	                "saugupta@adobe.com", "", ""));
 	  }
+	 
 
-	  @Bean
+	  @Bean  
 	  public SessionFactory sessionFactory() throws IOException {
 	    PropertiesFactoryBean propertiesFactory = new PropertiesFactoryBean();
 	    propertiesFactory

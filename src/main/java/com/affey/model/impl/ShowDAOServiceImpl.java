@@ -10,8 +10,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ import com.affey.model.Show;
 import com.affey.model.ShowDAOService;
 import com.affey.model.Theatre;
 import com.affey.rest.pojo.ShowReturnPojo;
+import com.affey.service.ShowFilters;
 import com.affey.util.AffeyException;
 
 @Repository
@@ -153,5 +156,35 @@ public class ShowDAOServiceImpl implements ShowDAOService{
 		return null;
 	}
 
+	@Override
+	@Transactional
+	public List<Show> listShows(ShowFilters showFilters) {
+		 final Session session = sessionFactory.getCurrentSession();
+		 final List<Criterion> criteria = new ArrayList<Criterion>();
+		if(showFilters.getMovieId()!=null)
+			criteria.add(Restrictions.eq("movie.movieId", showFilters.getMovieId()));
+		if(showFilters.getTheatreId()!=null)
+			criteria.add(Restrictions.eq("theatre.theatreId",showFilters.getTheatreId()));
+		if(showFilters.getRange()!=null){
+			criteria.add(Restrictions.ge("startTime",showFilters.getRange().getL()));
+			criteria.add(Restrictions.le("endTime",showFilters.getRange().getM()));
+		}
+	 return list(session, criteria);
+}
 
+@SuppressWarnings("unchecked")
+  protected List<Show> list(Session session, List<Criterion> filters) {
+    final Criteria criteria = session.createCriteria(ShowDTO.class)
+        .createAlias("theatre", "theatre")
+        .createAlias("movie", "movie");
+     for (Criterion criterion : filters) {
+      criteria.add(criterion);
+    }
+   
+    final List<Show> list = criteria
+        .addOrder(Order.asc("showId"))
+        //.setResultTransformer(Transformers.aliasToBean(ShowDTO.class))
+        .list();
+    return list;
+  }
 }

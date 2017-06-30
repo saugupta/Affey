@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.affey.rest.pojo.ShowReturnPojo;
+import com.affey.service.ShowFilters;
 
 public interface ShowDAOService {
 
@@ -22,6 +23,8 @@ public interface ShowDAOService {
 	public List<Long> listConflictingShows(Show show, long theatreId);
 
 	public ShowReturnPojo createShowAndSeats(Show show, Long theatreId, Long movieId);
+
+	public List<Show> listShows(ShowFilters showFilters);
 	
 }
 

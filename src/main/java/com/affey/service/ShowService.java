@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.affey.model.Show;
 import com.affey.rest.pojo.ShowReturnPojo;
+import com.affey.service.ShowFilters.ShowFiltersBuilder;
 
 public interface ShowService {
 
@@ -13,4 +14,7 @@ public interface ShowService {
 
 	public boolean deleteShow(String movieName , List<String> theatreNames);
 	
+	public ShowFiltersBuilder newFiltersBuilder();
+	
+	public List<Show> listShows(ShowFilters showFilters);
 }

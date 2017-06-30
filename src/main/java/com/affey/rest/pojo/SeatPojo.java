@@ -37,11 +37,6 @@ public class SeatPojo implements Seat, Serializable{
 	public Long getSeatId() {
 		return null;
 	}
-	
-	@Override
-	public boolean isReserved() {
-		return reserved;
-	}
 
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;

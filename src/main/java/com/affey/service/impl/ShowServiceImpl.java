@@ -9,6 +9,8 @@ import com.affey.model.SeatDAOService;
 import com.affey.model.Show;
 import com.affey.model.ShowDAOService;
 import com.affey.rest.pojo.ShowReturnPojo;
+import com.affey.service.ShowFilters;
+import com.affey.service.ShowFilters.ShowFiltersBuilder;
 import com.affey.service.ShowService;
 import com.affey.service.TheatreService;
 import com.affey.util.AffeyException;
@@ -58,5 +60,15 @@ public class ShowServiceImpl implements ShowService {
 //		    }
 		  
 		   
+	}
+
+	@Override
+	public ShowFiltersBuilder newFiltersBuilder() {
+		return new ShowFiltersBuilderImpl();
+	}
+
+	@Override
+	public List<Show> listShows(ShowFilters showFilters) {
+		return showDAOService.listShows(showFilters);
 	}
 }

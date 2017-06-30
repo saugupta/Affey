@@ -1,5 +1,6 @@
 package com.affey.model.impl;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -77,4 +78,10 @@ public class TheatreDAOServiceImpl implements TheatreDAOService{
 	    throw new AffeyException(
 	    		"No theatre found with id:"+ theatreId);
 	  }
+
+	@Override
+	public List<Theatre> list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
