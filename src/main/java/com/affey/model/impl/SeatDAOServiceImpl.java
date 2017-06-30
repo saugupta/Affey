@@ -10,21 +10,28 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.affey.model.Seat;
 import com.affey.model.SeatDAOService;
 import com.affey.model.Show;
+import com.affey.rest.BookingRestService;
 import com.affey.service.SeatFilters;
 import com.affey.util.AffeyException;
 
+import org.slf4j.LoggerFactory;
 @Repository
 public class SeatDAOServiceImpl implements SeatDAOService{
 	
 	 private final SessionFactory sessionFactory;
 	 
+	 private static final Logger LOGGER = LoggerFactory.getLogger(SeatDAOService.class);
+		
 	  @Autowired
 	  public SeatDAOServiceImpl(SessionFactory sessionFactory) {
 	    this.sessionFactory = sessionFactory;
@@ -52,14 +59,13 @@ public class SeatDAOServiceImpl implements SeatDAOService{
 	}
 
 	@Override
-	@Transactional
+	@Transactional(isolation =Isolation.READ_UNCOMMITTED )
 	public boolean bookTheSeats(Long[] seats, String userName) {
 		Session session = sessionFactory.getCurrentSession();
 		UserDTO userDTO = (UserDTO) session.get(UserDTO.class, userName);
 		 if (userDTO == null) {
 		    	throw new AffeyException("No User found with userName:"+ userName);
 		    }
-		
 		for(int i=0;i<seats.length;i++){
 			SeatDTO seatDTO= (SeatDTO) session.get(SeatDTO.class, seats[i]);
 			if(seatDTO==null)
@@ -68,6 +74,7 @@ public class SeatDAOServiceImpl implements SeatDAOService{
 				throw new AffeyException("Seat already reserved:"+ seats[i]);
 			seatDTO.setReserved(true);
 			seatDTO.setUser(userDTO);
+		LOGGER.info("User:"+ userDTO.getUserName()+ " booked Seat:"+ seatDTO.getSeatId());
 		}
 		return true;
 	}

@@ -68,7 +68,7 @@ public class SeatRestService {
 		return new ResponseEntity<List<Seat>>(seats, HttpStatus.OK);
 	 } 
 	 
-	 @RequestMapping(value = "/v1/api/admin/unreserveSeats", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	 @RequestMapping(value = "/v1/api/admin/unreserveSeats", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	  @ApiOperation(value = "Unreserve Seats", position = 3)
 	  public  ResponseEntity<?>  unreserveSeats(@ApiParam(value = "Theatre Id", defaultValue = "0", required = false) @RequestParam(value = "theatreId", defaultValue = "0", required = false) Long theatreId,
 			  @ApiParam(value = "Show Id", defaultValue = "0", required = false) @RequestParam(value = "showId", defaultValue = "0", required = false) Long showId,
